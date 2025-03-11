@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль пользователя</title>
+    <style>
+        .container {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 10px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .info {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .button {
+            display: block;
+            width: 200px;
+            text-align: center;
+            padding: 10px;
+            margin: 20px auto;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Профиль пользователя</h2>
+
+    <p class="info"><strong>Имя:</strong> <span th:text="${user.name}"></span></p>
+    <p class="info"><strong>Фамилия:</strong> <span th:text="${user.surname}"></span></p>
+    <p class="info"><strong>Возраст:</strong> <span th:text="${user.age}"></span></p>
+    <p class="info"><strong>Логин:</strong> <span th:text="${user.username}"></span></p>
+    <p class="info"><strong>Роль:</strong> <span th:each="role : ${user.roles}" th:text="${role.name + ' '}" style="margin-right: 5px;"></span></p>
+</div>
+
+<a href="#" class="button logout-button"
+   onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
+    Выйти
+</a>
+
+<form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;"></form>
+
+<style>
+    .logout-button {
+        background-color: #dc3545; /* Красный цвет */
+    }
+
+    .logout-button:hover {
+        background-color: #c82333; /* Темнее при наведении */
+    }
+</style>
+
+</body>
+</html>
