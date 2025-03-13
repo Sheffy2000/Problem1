@@ -4,7 +4,6 @@ package ru.kata.spring.boot_security.demo.controller;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,8 +41,12 @@ public class UserController {
     @GetMapping(value = "/admin")
     public String printWelcomeForAdmin(Model model) {
         List<User> allUsers = userService.showUsers ();
+        Authentication auth = SecurityContextHolder.getContext ().getAuthentication ();
+        String username = auth.getName ();
+        User user = userService.findUserByUsername (username);
+        model.addAttribute ("user", user);
         model.addAttribute ("users", allUsers);
-        return "allUsersForAdmin";
+        return "allUsersForAdmin2";
     }
 
     @GetMapping(value = "/addUser")
@@ -79,10 +82,15 @@ public class UserController {
         return "userFormForUpdate";
     }
 
-    @GetMapping("deleteUser")
+    @GetMapping("/deleteUser")
     public String deleteUser(@RequestParam("id") int id) {
         userService.deleteUser (id);
         return "redirect:/admin";
+    }
+
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login";
     }
 
 }
