@@ -46,7 +46,7 @@ public class UserController {
         User user = userService.findUserByUsername (username);
         model.addAttribute ("user", user);
         model.addAttribute ("users", allUsers);
-        return "allUsersForAdmin2";
+        return "allUsersForAdmin";
     }
 
     @GetMapping(value = "/addUser")
